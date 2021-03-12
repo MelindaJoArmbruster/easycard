@@ -82,7 +82,11 @@ export default function CheckoutForm() {
       />
       <button disabled={processing || disabled || succeeded} id="submit">
         <span id="button-text">
-          {processing ? <div className="spinner" id="spinner" /> : 'Pay now'}
+          {processing ? (
+            <div className="spinner-border" id="spinner" />
+          ) : (
+            'Pay now'
+          )}
         </span>
       </button>
       {/* Show any error that happens when processing the payment */}
@@ -92,7 +96,13 @@ export default function CheckoutForm() {
         </div>
       )}
       {/* Show a success message upon completion */}
-      <p className={succeeded ? 'result-message' : 'result-message hidden'}>
+      <p
+        className={
+          succeeded
+            ? 'stripe-result-message'
+            : 'stripe-result-message stripe-hidden'
+        }
+      >
         Payment succeeded, see the result in your
         <a href="https://dashboard.stripe.com/test/payments">
           {' '}

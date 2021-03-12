@@ -5,11 +5,10 @@ import Routes from './routes'
 
 const App = () => {
   return (
-    <div>
-      Hello
+    <>
       <Navbar />
       <Routes />
-    </div>
+    </>
   )
 }
 
