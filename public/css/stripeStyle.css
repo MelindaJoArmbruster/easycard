@@ -35,18 +35,18 @@ body {
   box-sizing: border-box;
 } */
 
-.result-message {
+.stripe-result-message {
   line-height: 22px;
   font-size: 16px;
 }
 
-.result-message a {
+.stripe-result-message a {
   color: rgb(89, 111, 214);
   font-weight: 600;
   text-decoration: none;
 }
 
-.hidden {
+.stripe-hidden {
   display: none;
 }
 
@@ -99,7 +99,7 @@ button:disabled {
 } */
 
 /* spinner/processing state, errors */
-.spinner,
+/* .spinner,
 .spinner:before,
 .spinner:after {
   border-radius: 50%;
@@ -151,7 +151,7 @@ button:disabled {
   animation: loading 2s infinite ease;
 }
 
-/* @keyframes loading {
+@keyframes loading {
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
@@ -160,9 +160,9 @@ button:disabled {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
-}
+} */
 
-@media only screen and (max-width: 600px) {
+/* @media only screen and (max-width: 600px) {
   form {
     width: 80vw;
   }
