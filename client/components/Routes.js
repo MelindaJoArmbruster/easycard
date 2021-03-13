@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, CheckoutForm} from '.'
 import {me} from '../store'
 import Home from './Home'
+import Landing from './Landing'
 import About from './About'
 import AllTemplates from './AllTemplates'
 import SingleTemplateView from './SingleTemplateView'
@@ -27,7 +28,8 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={Landing} />
+        <Route exact path="/landing" component={Landing} />
         <Route exact path="/about" component={About} />
         <Route exact path="/templates" component={AllTemplates} />
 
