@@ -4,7 +4,7 @@ import {Provider} from 'react-redux'
 import {Router} from 'react-router-dom'
 import history from './history'
 import store from './store'
-import App from './app'
+import App from './components/App'
 import {loadStripe} from '@stripe/stripe-js'
 import {Elements} from '@stripe/react-stripe-js'
 

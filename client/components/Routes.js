@@ -2,8 +2,14 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, CheckoutForm} from './components'
-import {me} from './store'
+import {Login, Signup, UserHome, CheckoutForm} from '.'
+import {me} from '../store'
+import Home from './Home'
+import About from './About'
+import AllTemplates from './AllTemplates'
+import SingleTemplateView from './SingleTemplateView'
+import OrderForm from './OrderForm'
+import Confirmation from './Confirmation'
 
 /**
  * COMPONENT
@@ -21,6 +27,17 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/about" component={About} />
+        <Route exact path="/templates" component={AllTemplates} />
+
+        <Route
+          exact
+          path="/templates/:templateId"
+          component={SingleTemplateView}
+        />
+        <Route exact path="/order" component={OrderForm} />
+        <Route exact path="/confirmation" component={Confirmation} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
