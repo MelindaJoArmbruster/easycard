@@ -8,11 +8,17 @@ const SingleTemplateCard = props => {
         <img
           className="bd-placeholder-img card-img-top"
           width="100%"
-          height="225"
+          height="250"
           src={props.template.frontImageURL}
           aria-label="Placeholder: Thumbnail"
-          preserveAspectRatio="xMidYMid slice"
           focusable="false"
+          style={{
+            objectFit: 'none',
+            objectPosition: 'center',
+            width: '100%',
+            maxHeight: '250px',
+            marginBottom: '1rem'
+          }}
         />
 
         <div className="card-body">

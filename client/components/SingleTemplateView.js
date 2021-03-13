@@ -14,17 +14,25 @@ class SingleTemplateView extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container text-center">
         <div>
           <img
-            className="singleTemplateImage"
+            className="py-2 mt-4"
             src={this.props.singleTemplate.frontImageURL}
+            style={{
+              objectPosition: 'center',
+              maxWidth: '100%'
+            }}
           />
         </div>
         <div>
           <img
-            className="singleTemplateImage"
+            className="py-2"
             src={this.props.singleTemplate.backImageURL}
+            style={{
+              objectPosition: 'center',
+              maxWidth: '100%'
+            }}
           />
         </div>
         <div className="linkDiv">
@@ -34,10 +42,14 @@ class SingleTemplateView extends React.Component {
               templateId: this.props.singleTemplate.id
             }}
           >
-            <button id="personalize">Personalize This Card</button>
+            <button className="btn btn-sm btn-outline-secondary m-3">
+              Personalize This Card
+            </button>
           </Link>
           <Link to={{pathname: '/templates'}}>
-            <button className="button">Back to All Templates</button>
+            <button className="btn btn-sm btn-outline-secondary m-3">
+              Back to All Templates
+            </button>
           </Link>
         </div>
       </div>

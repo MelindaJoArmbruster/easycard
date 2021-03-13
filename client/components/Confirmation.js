@@ -57,30 +57,41 @@ class Confirmation extends React.Component {
     }
 
     return (
-      <div>
-        <div>
+      <div className="container text-center">
+        <p className="mt-4 text-start lead alert alert-success" role="alert">
           Estimated Delivery Date:{' '}
           {this.props.confirmation.lobExpectedDeliveryDate}
-          <br />
+        </p>
+        <p className="mt-4 text-start lead alert alert-success" role="alert">
           Direct mail id number: {this.props.confirmation.lobId}
-        </div>
-        <div>
-          The confirmation images below will take 5-10 seconds to load...
-        </div>
+        </p>
+        <p className="mt-4 text-start lead alert alert-info" role="alert">
+          Confirmation images will load in 5-10 seconds...
+        </p>
+        <Link to={{pathname: '/templates'}}>
+          <button className="btn btn-sm btn-outline-secondary mt-3 text-start">
+            Send Another Card
+          </button>
+        </Link>
         <br />
-        <div>
-          <img className="singleTemplateImage" src={this.state.backImageURL} />
-        </div>
+
+        <img
+          className="py-2 mt-2"
+          src={this.state.backImageURL}
+          style={{
+            objectPosition: 'center',
+            maxWidth: '100%'
+          }}
+        />
         <br />
-        <div>
-          <img className="singleTemplateImage" src={this.state.frontImageURL} />
-        </div>
-        <br />
-        <div>
-          <Link to={{pathname: '/templates'}}>
-            <button className="button">Choose another card</button>
-          </Link>
-        </div>
+        <img
+          className="py-2 mb-5"
+          src={this.state.frontImageURL}
+          style={{
+            objectPosition: 'center',
+            maxWidth: '100%'
+          }}
+        />
       </div>
     )
   }
