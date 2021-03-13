@@ -27,7 +27,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             {isLoggedIn ? (
               <>
                 {/* The navbar will show these links after you log in */}
-                <Link className="nav-item nav-link mx-2" to="/home">
+                <Link className="nav-item nav-link mx-2" to="/">
                   Home
                 </Link>
                 <a
@@ -41,11 +41,20 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             ) : (
               <>
                 {/* The navbar will show these links before you log in */}
+                <Link className="nav-item nav-link mx-2" to="/">
+                  Home
+                </Link>
+                <Link className="nav-item nav-link mx-2" to="/templates">
+                  Browse Cards
+                </Link>
                 <Link className="nav-item nav-link mx-2" to="/login">
                   Login
                 </Link>
                 <Link className="nav-item nav-link mx-2" to="/signup">
                   Sign Up
+                </Link>
+                <Link className="nav-item nav-link mx-2" to="/about">
+                  About
                 </Link>
               </>
             )}
