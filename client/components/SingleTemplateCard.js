@@ -29,7 +29,7 @@ const SingleTemplateCard = props => {
               <Link to={`/templates/${props.template.id}`}>
                 <button
                   type="button"
-                  className="btn btn-sm btn-outline-secondary"
+                  className="btn btn-sm btn-outline-primary"
                 >
                   View
                 </button>

@@ -9,7 +9,9 @@ class Confirmation extends React.Component {
     super(props)
     this.state = {
       frontImageURL: '/images/default-front.png',
-      backImageURL: '/images/default-back.png'
+      backImageURL: '/images/default-back.png',
+      showFrontWaiting: true,
+      showBackWaiting: true
     }
     this.checkBackImage = this.checkBackImage.bind(this)
     this.checkFrontImage = this.checkFrontImage.bind(this)
@@ -30,6 +32,7 @@ class Confirmation extends React.Component {
       ) {
         this.setState({backImageURL: this.props.confirmation.lobBackPngURL})
         clearInterval(this.backInterval)
+        this.setState({showBackWaiting: false})
       }
     } catch (err) {
       console.log(err)
@@ -46,6 +49,7 @@ class Confirmation extends React.Component {
           frontImageURL: this.props.confirmation.lobFrontPngURL
         })
         clearInterval(this.frontInterval)
+        this.setState({showFrontWaiting: false})
       }
     } catch (err) {
       console.log(err)
@@ -66,11 +70,15 @@ class Confirmation extends React.Component {
         <p className="mt-4 text-start lead alert alert-success" role="alert">
           Direct mail id number: {this.props.confirmation.lobId}
         </p>
-        <p className="mt-4 text-start lead alert alert-info" role="alert">
-          Confirmation images will load in 5-10 seconds...
-        </p>
+        {this.state.showBackWaiting || this.state.showFrontWaiting ? (
+          <p className="mt-4 text-start lead alert alert-info" role="alert">
+            Confirmation images will load in 5-10 seconds...
+          </p>
+        ) : (
+          ''
+        )}
         <Link to={{pathname: '/templates'}}>
-          <button className="btn btn-sm btn-outline-secondary mt-3 text-start">
+          <button className="btn btn-sm btn-primary mt-3 text-start">
             Send Another Card
           </button>
         </Link>

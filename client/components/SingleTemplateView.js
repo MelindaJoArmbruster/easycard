@@ -43,7 +43,7 @@ class SingleTemplateView extends React.Component {
                 templateId: this.props.singleTemplate.id
               }}
             >
-              <button className="btn btn-sm btn-outline-secondary m-3">
+              <button className="btn btn-sm btn-primary m-3">
                 Personalize This Card
               </button>
             </Link>
@@ -53,13 +53,13 @@ class SingleTemplateView extends React.Component {
                 pathname: '/login'
               }}
             >
-              <button className="btn btn-sm btn-outline-secondary m-3">
+              <button className="btn btn-sm btn-primary m-3">
                 Log In to Personalize
               </button>
             </Link>
           )}
           <Link to={{pathname: '/templates'}}>
-            <button className="btn btn-sm btn-outline-secondary m-3">
+            <button className="btn btn-sm btn-outline-primary m-3">
               Back to All Templates
             </button>
           </Link>
