@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {Link} from 'react-router-dom'
 
 /**
  * COMPONENT
@@ -10,27 +11,99 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div className="container">
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
+    <>
+      <div className="container-fluid login-bg text-center">
+        <div className="row justify-content-center">
+          <div className="col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3">
+            <form
+              className="login-form-container"
+              onSubmit={handleSubmit}
+              name={name}
+            >
+              <div className="text-center mb-5">
+                <h3>Easycard {displayName}</h3>
+              </div>
+              <div className="mb-5">
+                <input
+                  name="email"
+                  type="email"
+                  className="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder="Email"
+                />
+              </div>
+              <div className="mb-5">
+                <input
+                  name="password"
+                  type="password"
+                  className="form-control"
+                  id="exampleInputPassword1"
+                  placeholder="Password"
+                />
+              </div>
+              <div className="d-grid gap-2">
+                <button type="submit" className="btn btn-primary mb-3">
+                  {displayName}
+                </button>
+              </div>
+              {error &&
+                error.response && (
+                  <div
+                    className="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                  >
+                    {' '}
+                    {error.response.data}{' '}
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    />{' '}
+                  </div>
+                )}
+              <a href="/auth/google">{displayName} with Google</a>
+              <div className="mt-3">
+                {displayName === 'Login' ? (
+                  <span>
+                    Not registered? <Link to="/signup">Sign Up</Link>
+                  </span>
+                ) : (
+                  <span>
+                    Already registered? <Link to="/login">Login</Link>
+                  </span>
+                )}
+              </div>
+            </form>
+          </div>
         </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
+      </div>
+
+      {/* <div className="container-fluid">
+        <div className="row">
+          <div className="col-12 col-sm-6 col-md-3">
+            <form onSubmit={handleSubmit} name={name}>
+              <div>
+                <label className="sr-only" htmlFor="email">
+                  Email
+                </label>
+                <input name="email" type="text" placeholder="Email" />
+              </div>
+              <div>
+                <label htmlFor="password">Password</label>
+                <input name="password" type="password" placeholder="Password" />
+              </div>
+              <div>
+                <button type="submit">{displayName}</button>
+              </div>
+              {error && error.response && (<div className="alert alert-danger" role="alert"> {error.response.data} </div>)}
+            </form>
+            <a href="/auth/google">{displayName} with Google</a>
+          </div>
         </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
-    </div>
+      </div> */}
+    </>
   )
 }
 

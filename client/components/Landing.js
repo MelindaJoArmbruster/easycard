@@ -108,7 +108,7 @@ const Landing = () => {
             <h1 className="display-1">
               <i className="bi bi-pencil" />
             </h1>
-            <h2 className="mb-5">Create</h2>
+            <h2 className="mb-5">Personalize</h2>
           </div>
           <div className="col-md-4">
             <h1 className="display-1">
