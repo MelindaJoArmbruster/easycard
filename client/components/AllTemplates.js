@@ -4,11 +4,8 @@ import {fetchTemplates} from '../store/templatesReducer'
 import SingleTemplateCard from './SingleTemplateCard'
 
 class AllTemplates extends React.Component {
-  constructor() {
-    super()
-  }
-
   componentDidMount() {
+    localStorage.clear()
     this.props.fetchTemplates()
   }
 

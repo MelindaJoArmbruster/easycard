@@ -9,7 +9,7 @@ const calculateOrderAmount = items => {
 
   // people from directly manipulating the amount on the client
 
-  return 1400
+  return 299
 }
 
 router.post('/', async (req, res) => {

@@ -2,15 +2,15 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, CheckoutForm} from '.'
+import {Login, Signup, UserHome} from '.'
 import {me} from '../store'
-import Home from './Home'
 import Landing from './Landing'
 import About from './About'
 import AllTemplates from './AllTemplates'
 import SingleTemplateView from './SingleTemplateView'
 import OrderForm from './OrderForm'
 import Confirmation from './Confirmation'
+import GoogleSuccess from './GoogleSuccess'
 
 /**
  * COMPONENT
@@ -40,11 +40,12 @@ class Routes extends Component {
         />
         <Route exact path="/order" component={OrderForm} />
         <Route exact path="/confirmation" component={Confirmation} />
+        <Route exact path="/googlesuccess" component={GoogleSuccess} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
-            <Route path="/payment" component={CheckoutForm} />
+            {/* <Route path="/payment" component={CheckoutForm} /> */}
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

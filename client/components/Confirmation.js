@@ -16,6 +16,7 @@ class Confirmation extends React.Component {
   }
 
   componentDidMount() {
+    localStorage.clear()
     this.props.submitOrder(this.props.location.order)
     this.backInterval = setInterval(() => this.checkBackImage(), 1000)
     this.frontInterval = setInterval(() => this.checkFrontImage(), 1000)

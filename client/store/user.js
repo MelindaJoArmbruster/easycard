@@ -40,7 +40,10 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(getUser(res.data))
-    history.push('/templates')
+    const localTemplateId = localStorage.getItem('templateId')
+    localTemplateId
+      ? history.push(`/templates/${localTemplateId}`)
+      : history.push('/templates')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
@@ -48,6 +51,7 @@ export const auth = (email, password, method) => async dispatch => {
 
 export const logout = () => async dispatch => {
   try {
+    localStorage.clear()
     await axios.post('/auth/logout')
     dispatch(removeUser())
     history.push('/login')

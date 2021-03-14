@@ -1,6 +1,8 @@
 import React from 'react'
 
 const About = () => {
+  localStorage.clear()
+
   return (
     <div className="container">
       <h3 className="mt-5">SPA for Sending Postcards Using Direct Mail API</h3>
