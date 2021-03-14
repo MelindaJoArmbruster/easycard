@@ -22,8 +22,33 @@ async function seed() {
     console.log('db synced!')
 
     const users = await Promise.all([
-      User.create({email: 'cody@email.com', password: '123'}),
-      User.create({email: 'murphy@email.com', password: '123'})
+      User.create({
+        email: 'cody@email.com',
+        password: '123',
+        name: 'Cody Moore',
+        address: '7590 Pelham Dr',
+        city: 'Chesterland',
+        state: 'OH',
+        zip: '44026'
+      }),
+      User.create({
+        email: 'murphy@email.com',
+        password: '123',
+        name: 'Murphy Arnold',
+        address: '229 Helmbright Dr',
+        city: 'Gahanna',
+        state: 'OH',
+        zip: '43230'
+      }),
+      User.create({
+        email: 'melindajoarmbruster@gmail.com',
+        name: 'Melinda Armbruster',
+        address: '10437 Briar Hill Dr',
+        city: 'Kirtland',
+        state: 'OH',
+        zip: '44094',
+        googleId: '100090946888920492947'
+      })
     ])
 
     const violet = await Template.create({

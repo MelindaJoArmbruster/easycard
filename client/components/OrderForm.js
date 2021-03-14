@@ -32,6 +32,13 @@ class OrderForm extends React.Component {
 
   componentDidMount() {
     localStorage.clear()
+    this.setState({
+      from_name: this.props.user.name,
+      from_address_line1: this.props.user.address,
+      from_address_city: this.props.user.city,
+      from_address_state: this.props.user.state,
+      from_address_zip: this.props.user.zip
+    })
   }
 
   handleChange(evt) {
@@ -58,7 +65,7 @@ class OrderForm extends React.Component {
   render() {
     return (
       <div className="container">
-        <form className="row g-3">
+        <form className="row g-3 my-3">
           <h2>To mail a postcard, complete the following fields:</h2>
 
           <h4>Recipient Details</h4>
@@ -213,6 +220,7 @@ class OrderForm extends React.Component {
         </Link> */}
         <StripeCheckout
           name="Easycard"
+          email={this.props.user.email}
           description="Postcards On Demand"
           allowRememberMe={false}
           currency="USD"
@@ -220,10 +228,7 @@ class OrderForm extends React.Component {
           token={this.onToken}
           stripeKey="pk_test_51ITC4REclLCTO1i8Ii7KMFc5Hhh7q8L9goymmiQkkiibIR2qUqh8OdM8ATmRoNC4NCGa7G4MBs3ZKN7lPqRQ7lFR00MRhDCusb"
         >
-          <button
-            type="button"
-            className="btn btn-sm btn-outline-secondary my-3 mx-1"
-          >
+          <button type="button" className="btn btn-sm btn-primary my-3 mx-1">
             Checkout and Send Card
           </button>
         </StripeCheckout>
@@ -237,6 +242,11 @@ class OrderForm extends React.Component {
 //     submitOrder: (order) => dispatch(addOrder(order)),
 //   };
 // };
+const mapState = state => {
+  return {
+    user: state.user
+  }
+}
 
 // export default connect(null, mapDispatchToProps)(OrderForm);
-export default OrderForm
+export default connect(mapState, null)(OrderForm)
