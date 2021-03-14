@@ -30,6 +30,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
                 <Link className="nav-item nav-link mx-2" to="/">
                   Home
                 </Link>
+                <Link className="nav-item nav-link mx-2" to="/templates">
+                  Browse Cards
+                </Link>
                 <a
                   className="nav-item nav-link mx-2"
                   href="#"
@@ -37,6 +40,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
                 >
                   Logout
                 </a>
+                <Link className="nav-item nav-link mx-2" to="/about">
+                  About
+                </Link>
               </>
             ) : (
               <>
