@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {addOrder} from '../store/orderReducer'
+import StripeCheckout from 'react-stripe-checkout'
+import history from '../history'
 
 class OrderForm extends React.Component {
   constructor(props) {
@@ -28,9 +30,28 @@ class OrderForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
+  componentDidMount() {
+    localStorage.clear()
+  }
+
   handleChange(evt) {
     this.setState({
       [evt.target.name]: evt.target.value
+    })
+  }
+
+  onToken = token => {
+    fetch('/api/payment', {
+      method: 'POST',
+      body: JSON.stringify(token)
+    }).then(response => {
+      response.json().then(data => {
+        // alert(`We are in business, ${data.email}`);
+        history.push({
+          pathname: '/confirmation',
+          order: {...this.state}
+        })
+      })
     })
   }
 
@@ -182,14 +203,30 @@ class OrderForm extends React.Component {
             </div>
           </div>
         </form>
-        <Link
+        {/* <Link
           className="sendCard"
           to={{pathname: '/confirmation', order: {...this.state}}}
         >
-          <button className="btn btn-sm btn-outline-secondary my-3 mx-1">
+          <button type="button" className="btn btn-sm btn-outline-secondary my-3 mx-1">
             Checkout and Send Card
           </button>
-        </Link>
+        </Link> */}
+        <StripeCheckout
+          name="Easycard"
+          description="Postcards On Demand"
+          allowRememberMe={false}
+          currency="USD"
+          amount={299}
+          token={this.onToken}
+          stripeKey="pk_test_51ITC4REclLCTO1i8Ii7KMFc5Hhh7q8L9goymmiQkkiibIR2qUqh8OdM8ATmRoNC4NCGa7G4MBs3ZKN7lPqRQ7lFR00MRhDCusb"
+        >
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-secondary my-3 mx-1"
+          >
+            Checkout and Send Card
+          </button>
+        </StripeCheckout>
       </div>
     )
   }

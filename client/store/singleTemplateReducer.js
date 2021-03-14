@@ -31,6 +31,7 @@ export const fetchSingleTemplate = templateId => {
     try {
       await dispatch(_singleTemplateLoading())
       const template = (await axios.get(`/api/templates/${templateId}`)).data
+      localStorage.setItem('templateId', templateId)
       await dispatch(_fetchSingleTemplate(template))
       dispatch(_singleTemplateSuccess())
     } catch (err) {
