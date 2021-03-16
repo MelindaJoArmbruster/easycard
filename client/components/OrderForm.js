@@ -1,7 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {addOrder} from '../store/orderReducer'
 import StripeCheckout from 'react-stripe-checkout'
 import history from '../history'
 
@@ -48,18 +46,31 @@ class OrderForm extends React.Component {
   }
 
   onToken = token => {
-    fetch('/api/payment', {
+    const body = {
+      token,
+      product: {name: 'Postcard', price: 2.99, productBy: 'Easycard'}
+    }
+    const headers = {
+      'Content-Type': 'application/json'
+    }
+
+    return fetch(`/api/payment`, {
       method: 'POST',
-      body: JSON.stringify(token)
-    }).then(response => {
-      response.json().then(data => {
-        // alert(`We are in business, ${data.email}`);
-        history.push({
-          pathname: '/confirmation',
-          order: {...this.state}
-        })
-      })
+      headers,
+      body: JSON.stringify(body)
     })
+      .then(response => {
+        console.log('RESPONSE ', response)
+        const {status} = response
+        console.log('STATUS ', status)
+        status === 200
+          ? history.push({pathname: '/confirmation', order: {...this.state}})
+          : alert('Payment failed.')
+      })
+      .catch(error => {
+        console.log(error)
+        alert(`Payment Error: ${error}`)
+      })
   }
 
   render() {
@@ -125,13 +136,6 @@ class OrderForm extends React.Component {
               placeholder="Greeting (i.e. Dear Jim,)"
             />
           </div>
-          {/* <input
-              name='merge_variables_message'
-              className='inputFullTall'
-              onChange={this.handleChange}
-              value={this.state.merge_variables_message}
-              placeholder='Type your personal message here'
-            /> */}
           <div className="col-md-12 m-1">
             <textarea
               name="merge_variables_message"
@@ -210,14 +214,6 @@ class OrderForm extends React.Component {
             </div>
           </div>
         </form>
-        {/* <Link
-          className="sendCard"
-          to={{pathname: '/confirmation', order: {...this.state}}}
-        >
-          <button type="button" className="btn btn-sm btn-outline-secondary my-3 mx-1">
-            Checkout and Send Card
-          </button>
-        </Link> */}
         <StripeCheckout
           name="Easycard"
           email={this.props.user.email}
@@ -237,16 +233,10 @@ class OrderForm extends React.Component {
   }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     submitOrder: (order) => dispatch(addOrder(order)),
-//   };
-// };
 const mapState = state => {
   return {
     user: state.user
   }
 }
 
-// export default connect(null, mapDispatchToProps)(OrderForm);
 export default connect(mapState, null)(OrderForm)
