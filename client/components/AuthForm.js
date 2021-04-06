@@ -30,7 +30,7 @@ const AuthForm = props => {
                   className="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
-                  placeholder="Email"
+                  placeholder="Email (try demo@demo.com)"
                 />
               </div>
               <div className="mb-5">
@@ -39,7 +39,7 @@ const AuthForm = props => {
                   type="password"
                   className="form-control"
                   id="exampleInputPassword1"
-                  placeholder="Password"
+                  placeholder="Password ('123' for demo)"
                 />
               </div>
               <div className="d-grid gap-2">
