@@ -1,225 +1,105 @@
-# Boilermaker
+# Easycard 📬  
+*A Fullstack SPA for Sending Personalized Postcards via Real Mail*
 
-_Good things come in pairs_
+![Easycard Architecture](./stackathonWhiteBoard.png)
 
-Looking to mix up a backend with `express`/`sequelize` and a frontend with
-`react`/`redux`? That's `boilermaker`!
+## Overview
 
-Follow along with the boilerplate workshop to make your own! This canonical
-version can serve as a reference, or a starting point. For an in depth
-discussion into the code that makes up this repository, see the
-[Boilermaker Guided Tour][boilermaker-yt]
+**Easycard** is a mobile-first, single page application (SPA) for creating and sending customized postcards through real-world direct mail services. This project is designed, built, and maintained entirely by me — Melinda Armbruster — as part of my Fullstack Academy self-study capstone. I continue to evolve the app for potential commercial release.
 
-[boilermaker-yt]: https://www.youtube.com/playlist?list=PLx0iOsdUOUmn7D5XL4mRUftn8hvAJGs8H
+This is a fully integrated, end-to-end application connecting a modern front-end, a Node.js backend, a PostgreSQL database, and multiple third-party APIs including Lob (for direct mail), Stripe (for payment processing), and Google OAuth (for authentication).
 
-## Setup
+---
 
-To use this as boilerplate, you'll need to take the following steps:
+## Features
 
-* Don't fork or clone this repo! Instead, create a new, empty
-  directory on your machine and `git init` (or create an empty repo on
-  Github and clone it to your local machine)
-* Run the following commands:
+- 📸 **Browse & Customize Postcards**  
+  A dynamic gallery allows users to select and personalize postcard templates using a responsive React/Redux interface.
 
-```
-git remote add boilermaker https://github.com/FullstackAcademy/boilermaker.git
-git fetch boilermaker
-git merge boilermaker/master
-```
+- 💳 **Pay with Stripe**  
+  Seamless payment flow through the Stripe API allows users to complete their order with a credit card.
 
-Why did we do that? Because every once in a while, `boilermaker` may
-be updated with additional features or bug fixes, and you can easily
-get those changes from now on by entering:
+- 📬 **Send Real Mail via Lob API**  
+  The app integrates with the Lob Direct Mail API to send postcards to real mailing addresses. Users receive visual confirmation of the exact printed postcard.
 
-```
-git fetch boilermaker
-git merge boilermaker/master
-```
+- 🧠 **User Authentication with Google OAuth**  
+  Google login provides a secure and user-friendly authentication mechanism.
 
-## Customize
+- 🔄 **Fullstack Data Flow**  
+  Efficient back-to-back API calls on the server coordinate the Stripe charge and Lob printing while storing postcard templates, orders, and API responses in a PostgreSQL database.
 
-Now that you've got the code, follow these steps to get acclimated:
+---
 
-* Update project name and description in `package.json` and
-  `.travis.yml` files
-* `npm install`
-* Create two postgres databases (`MY_APP_NAME` should match the `name`
-  parameter in `package.json`):
+## Architecture
 
-```
-export MY_APP_NAME=boilermaker
-createdb $MY_APP_NAME
-createdb $MY_APP_NAME-test
-```
+The application follows a service-oriented architecture with the following components:
 
-* By default, running `npm test` will use `boilermaker-test`, while
-  regular development uses `boilermaker`
-* Create a file called `secrets.js` in the project root
-  * This file is listed in `.gitignore`, and will _only_ be required
-    in your _development_ environment
-  * Its purpose is to attach the secret environment variables that you
-    will use while developing
-  * However, it's **very** important that you **not** push it to
-    Github! Otherwise, _prying eyes_ will find your secret API keys!
-  * It might look like this:
+- **React + Redux SPA (Frontend):**
+  - Browse postcards
+  - Personalize content and design
+  - Initiate postcard mailing and payments
+  - View final confirmation image of sent postcard
+  - Responsive UI built with Bootstrap CSS
 
-```
-process.env.GOOGLE_CLIENT_ID = 'hush hush'
-process.env.GOOGLE_CLIENT_SECRET = 'pretty secret'
-process.env.GOOGLE_CALLBACK = '/auth/google/callback'
-```
+- **Node + Express App Server (Backend):**
+  - Handles API orchestration (Lob, Stripe, Google)
+  - Manages business logic and database communication
+  - Uses Sequelize ORM for secure data access
 
-### OAuth
+- **PostgreSQL Database:**
+  - Stores HTML postcard templates
+  - Tracks orders and their status
+  - Records responses from the Lob API
 
-* To use OAuth with Google, complete the steps above with a real client
-  ID and client secret supplied from Google
-  * You can get them from the [Google APIs dashboard][google-apis].
+- **Third Party Services:**
+  - **Lob API**: Prints and mails the postcard, provides confirmation image
+  - **Stripe API**: Processes credit card payments
+  - **Google OAuth**: Enables user login and session management
 
-[google-apis]: https://console.developers.google.com/apis/credentials
+---
 
-## Linting
+## Technologies Used
 
-Linters are fundamental to any project. They ensure that your code
-has a consistent style, which is critical to writing readable code.
+- **Frontend:** React, Redux, Bootstrap, JavaScript (ES6+)
+- **Backend:** Node.js, Express.js, Sequelize ORM
+- **Database:** PostgreSQL
+- **Authentication:** Google OAuth
+- **Payments:** Stripe API
+- **Direct Mail Service:** Lob API
+- **Architecture:** RESTful API design, SPA, MVC pattern
 
-Boilermaker comes with a working linter (ESLint, with
-`eslint-config-fullstack`) "out of the box." However, everyone has
-their own style, so we recommend that you and your team work out yours
-and stick to it. Any linter rule that you object to can be "turned
-off" in `.eslintrc.json`. You may also choose an entirely different
-config if you don't like ours:
+---
 
-* [Standard style guide](https://standardjs.com/)
-* [Airbnb style guide](https://github.com/airbnb/javascript)
-* [Google style guide](https://google.github.io/styleguide/jsguide.html)
+## Why Easycard?
 
-## Start
+- Demonstrates my ability to integrate third-party services in a production-ready architecture.
+- Emphasizes thoughtful UX/UI design for non-technical users.
+- Showcases fullstack development from database design to API management to frontend state handling.
+- Built as a professional-grade portfolio project with real-world commercial potential.
 
-Running `npm run start-dev` will make great things happen!
+---
 
-If you want to run the server and/or `webpack` separately, you can also
-`npm run start-server` and `npm run build-client`.
+## Diagram
 
-From there, just follow your bliss.
+The diagram above illustrates how Easycard brings together multiple technologies and services into a single cohesive experience, from user interaction to postcard delivery.
 
-## Deployment
+---
 
-Ready to go world wide? Here's a guide to deployment! There are two
-supported ways to deploy in Boilermaker:
+## About the Developer
 
-* automatically, via continuous deployment with Travis.
-* "manually", from your local machine via the `deploy` script.
+👩‍💻 **Melinda Armbruster**  
+Frontend-focused Fullstack Software Engineer  
+3.5+ years of experience building customer-facing web applications  
+Based in Tennessee | [LinkedIn](#) | [Portfolio](#)
 
-Either way, you'll need to set up your deployment server to start.
-The steps below are also covered in the CI/CD workshop.
+---
 
-### Heroku
+## Future Enhancements
 
-1.  Set up the [Heroku command line tools][heroku-cli]
-2.  `heroku login`
-3.  Add a git remote for heroku:
+- Add user dashboard for managing previous orders
+- Enable image uploads and rich text customization
+- Build admin tools for template management
+- International mailing support
+- Optimize mobile layout further
 
-[heroku-cli]: https://devcenter.heroku.com/articles/heroku-cli
 
-* **If you are creating a new app...**
-
-  1.  `heroku create` or `heroku create your-app-name` if you have a
-      name in mind.
-  2.  `heroku addons:create heroku-postgresql:hobby-dev` to add
-      ("provision") a postgres database to your heroku dyno
-
-* **If you already have a Heroku app...**
-
-  1.  `heroku git:remote your-app-name` You'll need to be a
-      collaborator on the app.
-
-### Travis
-
-_**NOTE**_ that this step assumes that Travis-CI is already testing your code.
-Continuous Integration is not about testing per se – it's about _continuously
-integrating_ your changes into the live application, instead of periodically
-_releasing_ new versions. CI tools can not only test your code, but then
-automatically deploy your app. This is known as Continuous Deployment.
-Boilermaker comes with a `.travis.yml` configuration almost ready for
-continuous deployment; follow these steps to the job.
-
-1.  Run the following commands to create a new branch:
-
-```
-git checkout master
-git pull
-git checkout -b f/travis-deploy
-```
-
-2.  Run the following script to finish configuring `travis.yml` :
-    `npm run heroku-token`
-    This will use your `heroku` CLI (that you configured previously, if
-    not then see [above](#Heroku)) to generate an authentication token. It
-    will then use `openssl` to encrypt this token using a public key that
-    Travis has generated for you. It will then update your `.travis.yml`
-    file with the encrypted value to be sent with the `secure` key under
-    the `api_key`.
-3.  Run the following commands to commit these changes
-
-```
-git add .travis.yml
-git commit -m 'travis: activate deployment'
-git push -u origin f/travis-deploy
-```
-
-4.  Make a Pull Request for the new branch, get it approved, and merge it into
-    the master branch.
-
-_**NOTE**_ that this script depends on your local `origin` Git remote matching
-your GitHub URL, and your local `heroku` remote matching the name of your
-Heroku app. This is only an issue if you rename your GitHub organization,
-repository name or Heroku app name. You can update these values using
-`git remote` and its related commands.
-
-#### Travis CLI
-
-There is a procedure to complete the above steps by installing the official
-[Travis CLI tools][travis-cli]. This requires a recent Ruby, but this step
-should not be, strictly speaking, necessary. Only explore this option when the
-above has failed.
-
-[travis-cli]: https://github.com/travis-ci/travis.rb#installation
-
-That's it! From now on, whenever `master` is updated on GitHub, Travis
-will automatically push the app to Heroku for you.
-
-### Cody's own deploy script
-
-Your local copy of the application can be pushed up to Heroku at will,
-using Boilermaker's handy deployment script:
-
-1.  Make sure that all your work is fully committed and merged into your
-    master branch on Github.
-2.  If you currently have an existing branch called "deploy", delete
-    it now (`git branch -d deploy`). We will use a dummy branch
-    with the name `deploy` (see below), so and the script below will error if a
-    branch with that name already exists.
-3.  `npm run deploy`
-    _ this will cause the following commands to happen in order:
-    _ `git checkout -b deploy`: checks out a new branch called
-    `deploy`. Note that the name `deploy` here is not magical, but it needs
-    to match the name of the branch we specify when we push to our `heroku`
-    remote.
-    _ `webpack -p`: webpack will run in "production mode"
-    _ `git add -f public/bundle.js public/bundle.js.map`: "force" add
-    these files which are listed in `.gitignore`.
-    _ `git commit --allow-empty -m 'Deploying'`: create a commit, even
-    if nothing changed
-    _ `git push --force heroku deploy:master`: push your local
-    `deploy` branch to the `master` branch on `heroku`
-    _ `git checkout master`: return to your master branch
-    _ `git branch -D deploy`: remove the deploy branch
-
-Now, you should be deployed!
-
-Why do all of these steps? The big reason is because we don't want our
-production server to be cluttered up with dev dependencies like
-`webpack`, but at the same time we don't want our development
-git-tracking to be cluttered with production build files like
-`bundle.js`! By doing these steps, we make sure our development and
-production environments both stay nice and clean!
