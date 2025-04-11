@@ -1,7 +1,7 @@
 # Easycard 📬  
 *A Fullstack SPA for Sending Personalized Postcards via Real Mail*
 
-![Easycard Architecture](./stackathonWhiteBoard.png)
+![Easycard Architecture](public/images/stackathonWhiteBoard.png)
 
 ## Overview
 
