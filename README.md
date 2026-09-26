@@ -179,4 +179,19 @@ consent and callback completion remain untested. Stripe test balance and Lob
 test postcard-list requests both returned HTTP 200. No payment or postcard was
 created; checkout, physical delivery, and final confirmation remain unverified.
 Docker/ARM64/deployment checks were not performed. npm reported 120 dependency
-vulnerabilities; broad dependency remediation remains outside this migration.
+vulnerabilities before the security update.
+
+### Runtime dependency security update (2026-09-26)
+
+Express 4, Socket.IO client/server, Sequelize and its session store, Lob, Axios,
+PostgreSQL drivers, and applicable transitive packages were updated. The
+production-dependency audit fell from 9 critical and 14 high findings to zero
+critical and zero high findings. Ten low/moderate findings remain for later
+review. The complete 13-test suite, production client build, six-card browser
+render, Socket.IO connection, client credential scan, and a read-only Lob test
+API request passed. No payment or postcard was created.
+
+Node 22.18.0 and npm 10.9.3 remain the locally tested versions. Lob 7 supports
+Node 22 but declares npm 11.5.1 or newer; npm 10.9.3 installs it successfully
+with an engine warning. Chris should use npm 11.5.1 or newer for the image build
+to satisfy Lob's supported installer version.
