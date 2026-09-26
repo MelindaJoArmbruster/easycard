@@ -1,0 +1,50 @@
+# Easycard application and PostgreSQL database.
+name: easycard
+services:
+  db:
+    image: ${POSTGRES_IMAGE:-postgres:15.4-bookworm}
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-easycard}
+      POSTGRES_USER: ${POSTGRES_USER:-easycard}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    volumes:
+      - type: bind
+        source: /srv/app-data/easycard/postgres
+        target: /var/lib/postgresql/data
+        bind:
+          create_host_path: false
+    networks:
+      - private
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+  easycard:
+    image: registry.rev4labs.com/easycard:${APP_VERSION:?Set rebuilt image version}
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: "8080"
+      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL}
+      SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET}
+      GOOGLE_CALLBACK: ${GOOGLE_CALLBACK:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      STRIPE_PK: ${STRIPE_PK:-}
+      STRIPE_SK: ${STRIPE_SK:?Set STRIPE_SK}
+      LOB_API_KEY: ${LOB_API_KEY:-}
+      LOB_API_TEST_KEY: ${LOB_API_TEST_KEY:?Set LOB_API_TEST_KEY}
+    networks:
+      private:
+      proxy:
+        aliases:
+          - easycard-web
+networks:
+  private:
+  proxy:
+    external: true
