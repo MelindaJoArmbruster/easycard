@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const requireUser = require('./requireUser')
 module.exports = router
 // const { v4: uuidv4 } = require("uuid");
 const stripe = require('stripe')(process.env.STRIPE_SK)
@@ -13,7 +14,7 @@ const calculateOrderAmount = items => {
   return 299
 }
 
-router.post('/', (req, res) => {
+router.post('/', requireUser, (req, res) => {
   const {product, token} = req.body
   console.log('PRODUCT ', product)
   console.log('PRICE ', product.price)

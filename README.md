@@ -89,7 +89,7 @@ The diagram above illustrates how Easycard brings together multiple technologies
 
 👩‍💻 **Melinda Armbruster**  
 Frontend-focused Fullstack Software Engineer  
-3.5+ years of experience building customer-facing web applications  
+5+ years of experience building customer-facing web applications  
 Based in Tennessee | [LinkedIn](#) | [Portfolio](#)
 
 ---
@@ -112,11 +112,6 @@ in local settings. The application and seed script load this file only when
 `NODE_ENV` is absent or `development`; existing environment variables win.
 Tests and production read only explicitly injected settings. `.env` is for
 Compose interpolation and is never loaded by the application.
-
-`DATABASE_URL` does not imply TLS. Leave `DATABASE_SSL=false` for the local
-Unix socket and Chris's private Compose database. Set it to `true` only for a
-TLS-enabled database with a trusted certificate. Production requires its own
-`SESSION_SECRET`; never reuse the development secret.
 
 Run `npm install`, then `npm run build-client` and `npm run start-dev`.
 The project `.npmrc` retains legacy peer resolution for the original dependency
@@ -149,49 +144,7 @@ callback and provider settings separately. All supplied provider fields remain
 in both templates and Compose, including `LOB_API_KEY` even though the server
 uses only the test key.
 
-Chris should use Node major 22 for the image build, include `.npmrc` during
-installation, set `DATABASE_SSL=false` for the private database, and inject a
-separate production session secret. Docker builds, ARM64 validation, publishing
-and deployment are Chris's responsibility; local development requires no Docker.
-Private `.env`, `dev.env`, `secrets.js` and backup files are excluded from Git
-and the Docker build context. Retain private originals until their owner confirms
-the settings are safely retained.
+### API access control
 
-### Local validation (2026-09-26)
-
-Validated with Node 22.18.0, npm 10.9.3 and PostgreSQL 16.15, using role
-`melinda` and `/var/run/postgresql`. `npm install`, `npm run build-client`,
-`npm run seed`, `npm run start-dev`, and `npm test` passed. All 13 tests ran
-against the separately configured `easycard-test` database. Development seed
-counts were verified: 3 users, 6 templates, 6 orders. No `secrets.js` was present.
-The production and development bundles and source maps passed a local scan
-against the supplied private credentials. Changed JavaScript lint checks had
-no errors; existing seed/Lob naming and unused-variable warnings remain.
-
-Headless Chrome checks passed for landing, the six-card gallery, login,
-authenticated home/session persistence, registration/logout, and order-form
-sender prefill. The temporary registration account was removed afterward.
-The seeded login is `cody@email.com` / `123`; the existing login placeholder
-mentions `demo@demo.com`, which the original seed does not create.
-
-Google's redirect and localhost callback were checked, but interactive Google
-consent and callback completion remain untested. Stripe test balance and Lob
-test postcard-list requests both returned HTTP 200. No payment or postcard was
-created; checkout, physical delivery, and final confirmation remain unverified.
-Docker/ARM64/deployment checks were not performed. npm reported 120 dependency
-vulnerabilities before the security update.
-
-### Runtime dependency security update (2026-09-26)
-
-Express 4, Socket.IO client/server, Sequelize and its session store, Lob, Axios,
-PostgreSQL drivers, and applicable transitive packages were updated. The
-production-dependency audit fell from 9 critical and 14 high findings to zero
-critical and zero high findings. Ten low/moderate findings remain for later
-review. The complete 13-test suite, production client build, six-card browser
-render, Socket.IO connection, client credential scan, and a read-only Lob test
-API request passed. No payment or postcard was created.
-
-Node 22.18.0 and npm 10.9.3 remain the locally tested versions. Lob 7 supports
-Node 22 but declares npm 11.5.1 or newer; npm 10.9.3 installs it successfully
-with an engine warning. Chris should use npm 11.5.1 or newer for the image build
-to satisfy Lob's supported installer version.
+Payment and order-creation endpoints require an authenticated session. New
+orders are created only after authentication.

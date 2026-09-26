@@ -1,9 +1,10 @@
 const router = require('express').Router()
 const {Template, Order} = require('../db/models')
 const lobApiPostcard = require('../lob')
+const requireUser = require('./requireUser')
 
 // matches POST requests to /api/orders/
-router.post('/', async function(req, res, next) {
+router.post('/', requireUser, async function(req, res, next) {
   try {
     const clientOrder = await Order.create(req.body)
     const order = await Order.findByPk(clientOrder.id, {
@@ -47,17 +48,6 @@ router.post('/', async function(req, res, next) {
     }
     const response = await clientOrder.update(lobResponseDetails)
     res.send(response)
-  } catch (err) {
-    next(err)
-  }
-})
-
-//matches GET req to /api/orders/:orderId
-
-router.get('/:orderId', async (req, res, next) => {
-  try {
-    const order = await Order.findByPk(req.params.orderId)
-    res.send(order)
   } catch (err) {
     next(err)
   }
