@@ -14,15 +14,26 @@ const mockStore = configureMockStore(middlewares)
 describe('thunk creators', () => {
   let store
   let mockAxios
+  let originalLocalStorage
+  let storageCleared
 
   const initialState = {user: {}}
 
   beforeEach(() => {
+    originalLocalStorage = global.localStorage
+    storageCleared = false
+    global.localStorage = {
+      clear: () => {
+        storageCleared = true
+      }
+    }
     mockAxios = new MockAdapter(axios)
     store = mockStore(initialState)
   })
 
   afterEach(() => {
+    if (originalLocalStorage === undefined) delete global.localStorage
+    else global.localStorage = originalLocalStorage
     mockAxios.restore()
     store.clearActions()
   })
@@ -42,6 +53,7 @@ describe('thunk creators', () => {
     it('logout: eventually dispatches the REMOVE_USER action', async () => {
       mockAxios.onPost('/auth/logout').replyOnce(204)
       await store.dispatch(logout())
+      expect(storageCleared).to.equal(true)
       const actions = store.getActions()
       expect(actions[0].type).to.be.equal('REMOVE_USER')
       expect(history.location.pathname).to.be.equal('/login')

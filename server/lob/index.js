@@ -1,5 +1,3 @@
-require('../../secrets')
-
 const Lob = require('lob')(process.env.LOB_API_TEST_KEY)
 const cardDetails = require('./cardDetails')
 

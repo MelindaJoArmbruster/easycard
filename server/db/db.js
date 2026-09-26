@@ -3,23 +3,10 @@ const pkg = require('../../package.json')
 
 const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
 
-let config
+const config = {logging: false}
 
-if (process.env.DATABASE_URL) {
-  config = {
-    logging: false,
-    ssl: true,
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    }
-  }
-} else {
-  config = {
-    logging: false
-  }
+if (process.env.DATABASE_SSL === 'true') {
+  config.dialectOptions = {ssl: {require: true, rejectUnauthorized: true}}
 }
 
 const db = new Sequelize(

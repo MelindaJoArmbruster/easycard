@@ -1,5 +1,7 @@
 'use strict'
 
+require('../server/env')
+
 const db = require('../server/db')
 const {User, Template, Order} = require('../server/db/models')
 
@@ -214,7 +216,7 @@ async function seed() {
     console.log(`seeded ${users.length} users`)
     console.log(`seeded successfully`)
   } catch (err) {
-    console.log(err)
+    throw err
   }
 }
 

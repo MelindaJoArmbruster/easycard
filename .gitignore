@@ -16,3 +16,12 @@ yarn-error.log
 *.swo
 
 *~
+
+# Private settings and backup copies
+**/secrets.js*
+**/*.env.*
+**/.env.*
+*.bak
+*.orig
+!.env.example
+!dev.env.example
